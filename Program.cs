@@ -15,22 +15,22 @@ namespace NonRedundantCover
             //OUTPUT
             //A non redundant cover SigmaC of Sigma
 
-            Console.WriteLine("Running Part II");
-            PartII();
-            Console.WriteLine("Preparing data for Part III");
-            PartIII();
+            Console.WriteLine("Generating Functional Dependency sets and covers");
+            GenerateSchemaAndCovers();
+            Console.WriteLine("Preparing data for graphing");
+            PrepDataForGraphing();
 
             Console.WriteLine("Program finished, hit enter to exit.");
             Console.ReadLine();
         }
 
-        static void PartII()
+        static void GenerateSchemaAndCovers()
         {
             int minimumSchemaSize = 3;  //The minimum number of attributes in our schema
-            int maximumSchemaSize = 4;  //The maximum number of attributes in our schema
+            int maximumSchemaSize = 20;  //The maximum number of attributes in our schema
             Random rng = new Random();
-            int min = 1;    //The minimum number of functional dependencies in the sigma we generate  as a multiplier for the size of n
-            int max = 1;  //The maximum number of functional dependencies as a multiplier for the size of n
+            int min = 1;    //The minimum number of functional dependencies in the sigma we generate  as a multiplier for the size of the table schema (n)
+            int max = 1;  //The maximum number of functional dependencies as a multiplier for the size of the table schema (n)
             int i = 50;
 
             using (var writer = new CsvWriter("raw_output " + fileDetail + ".csv"))
@@ -83,18 +83,18 @@ namespace NonRedundantCover
             }
         }
 
-        static void PartIII()
+        static void PrepDataForGraphing()
         {
-            //Here, we read the file containing the part 2 output
+            //Here, we read the file containing the output of the previous part
             //And generate the averages that we end up putting into our graphs
             //We spit that out to a csv file, ready to be put into matlab or whatever graphing application we use
 
-            //Let us consider the graphs:
+            //Let us consider the 4 graphs we wish to present:
 
             //Graph 1 is a 3D graph, showing the average time to compute sigmaC as a function of the total number of attributes and the number of attributes in the nfs
             //Graph 2 is the same, except it shows the average of the percentage of the size of Sigma that is SigmaC
             //Graph 3 is a 2D graph that shows an average of the time to compute SigmaC
-            //Graph 4 is the same as raph 3, except that it shows the average size of SigmaC as a percentage of Sigma
+            //Graph 4 is the same as Graph 3, except that it shows the average size of SigmaC as a percentage of Sigma
 
             List<PartIIOut> rows = new List<PartIIOut>();
 
